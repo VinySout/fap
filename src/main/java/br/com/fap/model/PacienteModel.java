@@ -2,6 +2,7 @@ package br.com.fap.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,9 +21,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         allowGetters = true)
 public class PacienteModel implements Serializable {
 		
-	@Id
-    private Long idPaciente;	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
+	@Id
+    private Long idPaciente;
+	
+	@OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<ConsultaModel> consultas;
+	
     private Long idUsuario;
 	@NotBlank
     private String cpf;	
@@ -58,12 +67,19 @@ public class PacienteModel implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
-	
+        
 	public Long getIdPaciente() {
 		return idPaciente;
 	}
 	public void setIdPaciente(Long idPaciente) {
 		this.idPaciente = idPaciente;
+	}
+		
+	public Set<ConsultaModel> getConsultas() {
+		return consultas;
+	}
+	public void setConsultas(Set<ConsultaModel> consultas) {
+		this.consultas = consultas;
 	}
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -155,4 +171,13 @@ public class PacienteModel implements Serializable {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	@Override
+	  public String toString() {
+	    return "PacienteModel [idPaciente=" + idPaciente + ", idUsuario=" + idUsuario + ", cpf=" + cpf
+	        + ", identidade=" + identidade + ", idade=" + idade + ", telefone=" + telefone + ", nomePaciente=" + nomePaciente
+	        + ", nomeMae=" + nomeMae + ", dataNasc=" + dataNasc + ", dum=" + dum + ", dpp=" + dpp + ", peso=" + peso + ", altura=" + altura
+	        + ", casada" + casada + ", createdAt=" + createdAt + ", updatedAt" + updatedAt + "]";
+	  }
+	
+	
 }
