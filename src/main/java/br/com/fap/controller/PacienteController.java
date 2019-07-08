@@ -48,8 +48,7 @@ public class PacienteController {
 		PacienteModel paciente = pacienteRepository.findById(pacienteId)
 				.orElseThrow(() -> new ResourceNotFoundException("Paciente", "idPaciente", pacienteId));
 				
-		paciente.setIdPaciente(pacienteDetails.getIdPaciente());		
-		paciente.setIdUsuario(pacienteDetails.getIdUsuario());
+		paciente.setIdPaciente(pacienteDetails.getIdPaciente());
 		paciente.setCpf(pacienteDetails.getCpf());
 		paciente.setIdentidade(pacienteDetails.getIdentidade());
 		paciente.setIdade(pacienteDetails.getIdade());
@@ -58,10 +57,8 @@ public class PacienteController {
 		paciente.setNomeMae(pacienteDetails.getNomeMae());
 		paciente.setDataNasc(pacienteDetails.getDataNasc());
 		paciente.setDum(pacienteDetails.getDum());
-		paciente.setDpp(pacienteDetails.getDpp());
-		paciente.setPeso(pacienteDetails.getPeso());
-		paciente.setAltura(pacienteDetails.getAltura());
-		paciente.setCasada(pacienteDetails.getCasada());
+		paciente.setDpp(pacienteDetails.getDpp());		
+		paciente.setEstadoCivil(pacienteDetails.getEstadoCivil());
 		
 		PacienteModel updatedPaciente = pacienteRepository.save(paciente);
 		return updatedPaciente;

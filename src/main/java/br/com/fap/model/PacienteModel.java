@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -20,51 +21,48 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, 
         allowGetters = true)
 public class PacienteModel implements Serializable {
-		
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    private Long idPaciente;
-	
-	@OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<ConsultaModel> consultas;
-	
-    private Long idUsuario;
-	@NotBlank
-    private String cpf;	
-	@NotBlank
-    private String identidade;
-	@NotBlank
-    private String idade;
-	@NotBlank
-    private String telefone;
+    private Long idPaciente;	
+	@NotNull
+    private Long cpf;
+	@NotNull
+    private Long identidade;
+	@NotNull
+    private int idade;
+	@NotNull
+    private Long telefone;
 	@NotBlank
     private String nomePaciente;
 	@NotBlank
     private String nomeMae;
 	@NotBlank
-    private String dataNasc;
-	@NotBlank
-	private String dum;
-	@NotBlank
-	private String dpp;
-	@NotBlank
-	private String peso;
-	@NotBlank
-	private String altura;
-	@NotBlank
-	private String casada;
+	private String estadoCivil;
+	@NotNull
+	@Temporal(TemporalType.DATE)
+    private Date dataNasc;	
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	private Date dum; // Data da Última Mestruação	
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	private Date dpp; // Data Provável do Parto		
+	
+	@OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<ConsultaModel> consultas;
+	@OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<ExamesModel> exames;
+	@OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<EnderecoModel> endereco;
 	
 	@Column(nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @CreatedDate
     private Date createdAt;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @LastModifiedDate
     private Date updatedAt;
         
@@ -74,41 +72,28 @@ public class PacienteModel implements Serializable {
 	public void setIdPaciente(Long idPaciente) {
 		this.idPaciente = idPaciente;
 	}
-		
-	public Set<ConsultaModel> getConsultas() {
-		return consultas;
-	}
-	public void setConsultas(Set<ConsultaModel> consultas) {
-		this.consultas = consultas;
-	}
-	public Long getIdUsuario() {
-		return idUsuario;
-	}
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-	public String getCpf() {
+	public Long getCpf() {
 		return cpf;
 	}
-	public void setCpf(String cpf) {
+	public void setCpf(Long cpf) {
 		this.cpf = cpf;
 	}
-	public String getIdentidade() {
+	public Long getIdentidade() {
 		return identidade;
 	}
-	public void setIdentidade(String identidade) {
+	public void setIdentidade(Long identidade) {
 		this.identidade = identidade;
 	}
-	public String getIdade() {
+	public int getIdade() {
 		return idade;
 	}
-	public void setIdade(String idade) {
+	public void setIdade(int idade) {
 		this.idade = idade;
 	}
-	public String getTelefone() {
+	public Long getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(String telefone) {
+	public void setTelefone(Long telefone) {
 		this.telefone = telefone;
 	}
 	public String getNomePaciente() {
@@ -123,41 +108,47 @@ public class PacienteModel implements Serializable {
 	public void setNomeMae(String nomeMae) {
 		this.nomeMae = nomeMae;
 	}
-	public String getDataNasc() {
+	public String getEstadoCivil() {
+		return estadoCivil;
+	}
+	public void setEstadoCivil(String estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+	public Date getDataNasc() {
 		return dataNasc;
 	}
-	public void setDataNasc(String dataNasc) {
+	public void setDataNasc(Date dataNasc) {
 		this.dataNasc = dataNasc;
 	}
-	public String getDum() {
+	public Date getDum() {
 		return dum;
 	}
-	public void setDum(String dum) {
+	public void setDum(Date dum) {
 		this.dum = dum;
 	}
-	public String getDpp() {
+	public Date getDpp() {
 		return dpp;
 	}
-	public void setDpp(String dpp) {
+	public void setDpp(Date dpp) {
 		this.dpp = dpp;
+	}	
+	public Set<ConsultaModel> getConsultas() {
+		return consultas;
 	}
-	public String getPeso() {
-		return peso;
+	public void setConsultas(Set<ConsultaModel> consultas) {
+		this.consultas = consultas;
+	}		
+	public Set<ExamesModel> getExames() {
+		return exames;
 	}
-	public void setPeso(String peso) {
-		this.peso = peso;
+	public void setExames(Set<ExamesModel> exames) {
+		this.exames = exames;
+	}		
+	public Set<EnderecoModel> getEndereco() {
+		return endereco;
 	}
-	public String getAltura() {
-		return altura;
-	}
-	public void setAltura(String altura) {
-		this.altura = altura;
-	}
-	public String getCasada() {
-		return casada;
-	}
-	public void setCasada(String casada) {
-		this.casada = casada;
+	public void setEndereco(Set<EnderecoModel> endereco) {
+		this.endereco = endereco;
 	}
 	public Date getCreatedAt() {
 		return createdAt;
@@ -170,14 +161,5 @@ public class PacienteModel implements Serializable {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-	@Override
-	  public String toString() {
-	    return "PacienteModel [idPaciente=" + idPaciente + ", idUsuario=" + idUsuario + ", cpf=" + cpf
-	        + ", identidade=" + identidade + ", idade=" + idade + ", telefone=" + telefone + ", nomePaciente=" + nomePaciente
-	        + ", nomeMae=" + nomeMae + ", dataNasc=" + dataNasc + ", dum=" + dum + ", dpp=" + dpp + ", peso=" + peso + ", altura=" + altura
-	        + ", casada" + casada + ", createdAt=" + createdAt + ", updatedAt" + updatedAt + "]";
-	  }
-	
-	
+	}	
 }

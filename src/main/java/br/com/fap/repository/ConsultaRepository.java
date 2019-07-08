@@ -9,6 +9,5 @@ import br.com.fap.model.ConsultaModel;
 
 @Repository
 public interface ConsultaRepository extends JpaRepository<ConsultaModel, Long>{
-
-	List<ConsultaModel> findByPacienteIdPaciente(Long idPaciente);
+	public List<ConsultaModel> findByPacienteIdPaciente(Long idPaciente);
 }

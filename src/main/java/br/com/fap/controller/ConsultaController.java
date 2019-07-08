@@ -25,18 +25,26 @@ public class ConsultaController {
 
 	@Autowired
 	private ConsultaRepository consultaRepository;
-
 	@Autowired
 	private PacienteRepository pacienteRepository;
 	
-	 // Listar as consultas buscando por id de um paciente.
-	 
+	 // Listar as consultas buscando por id de um paciente.	 
 	 @GetMapping("/pacientes/{idPaciente}/consultas")
-	 public List<ConsultaModel> getConsultasByPacienteId(@PathVariable Long idPaciente) {		 
+	 public List<ConsultaModel> getConsultasByPacienteId(@PathVariable Long idPaciente) {
 		 pacienteRepository.findById(idPaciente)
 		 .orElseThrow(() -> new ResourceNotFoundException("Paciente", "IdPaciente", idPaciente));
 		 
 		 return consultaRepository.findByPacienteIdPaciente(idPaciente);
+	 }
+	// Listar consulta buscando por id de um paciente e id da consulta.
+	 @GetMapping("/pacientes/{idPaciente}/consultas/{idConsulta}")
+	 public ConsultaModel getConsByPacIdAndConsId(@PathVariable Long idPaciente, 
+			 												   @PathVariable Long idConsulta) {
+		 pacienteRepository.findById(idPaciente)
+		 .orElseThrow(() -> new ResourceNotFoundException("Paciente", "IdPaciente", idPaciente));
+		 
+		 return consultaRepository.findById(idConsulta)
+				 .orElseThrow(() -> new ResourceNotFoundException("Consulta", "idConsulta", idConsulta));
 	 }
 	 
 	// Adicionar uma nova consulta a um paciente.
@@ -65,11 +73,13 @@ public class ConsultaController {
 					consulta.setDataConsulta(consultaDetails.getDataConsulta());
 					consulta.setQueixa(consultaDetails.getQueixa());
 					consulta.setIdadeGestacional(consultaDetails.getIdadeGestacional());
+					consulta.setPeso(consultaDetails.getPeso());
+					consulta.setAltura(consultaDetails.getAltura());
 					consulta.setPesoImc(consultaDetails.getPesoImc());
 					consulta.setEdema(consultaDetails.getEdema());
 					consulta.setPresArterial(consultaDetails.getPresArterial());
 					consulta.setAlturaUterina(consultaDetails.getAlturaUterina());
-					consulta.setPresFetal(consultaDetails.getPresFetal());
+					consulta.setApresFetal(consultaDetails.getApresFetal());
 					consulta.setBcf(consultaDetails.getBcf());
 					consulta.setToque(consultaDetails.getToque());
 					consulta.setObs(consultaDetails.getObs());

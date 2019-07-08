@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -29,12 +32,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         allowGetters = true)
 public class ConsultaModel implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idConsulta;
 	
 	@ManyToOne (fetch = FetchType.LAZY, optional = false)
@@ -42,36 +43,40 @@ public class ConsultaModel implements Serializable{
 	@JsonIgnore
 	private PacienteModel paciente;
 	
-	@NotBlank
-	private String dataConsulta;
+	@Temporal(TemporalType.DATE)
+	private Date dataConsulta;
 	@NotBlank
 	private String queixa;
 	@NotBlank
-	private String idadeGestacional;
-	@NotBlank
-	private String pesoImc;
-	@NotBlank
-	private String edema;
+	private String idadeGestacional;	
+	@NotNull
+	private Double peso;
+	@NotNull
+	private Double altura;
+	@NotNull
+	private Double pesoImc;
+	@NotNull
+	private boolean edema;
 	@NotBlank
 	private String presArterial;
+	@NotNull
+	private Double alturaUterina;
 	@NotBlank
-	private String alturaUterina;
+	private String apresFetal; //apresentação fetal
 	@NotBlank
-	private String presFetal;
-	@NotBlank
-	private String bcf;
+	private String bcf; // Batimento cardíaco do feto
 	@NotBlank
 	private String toque;
 	@NotBlank
 	private String obs;
 	
 	@Column(nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @CreatedDate
     private Date createdAt;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @LastModifiedDate
     private Date updatedAt;
 	
@@ -91,11 +96,11 @@ public class ConsultaModel implements Serializable{
 		this.paciente = paciente;
 	}
 
-	public String getDataConsulta() {
+	public Date getDataConsulta() {
 		return dataConsulta;
 	}
 
-	public void setDataConsulta(String dataConsulta) {
+	public void setDataConsulta(Date dataConsulta) {
 		this.dataConsulta = dataConsulta;
 	}
 
@@ -114,20 +119,31 @@ public class ConsultaModel implements Serializable{
 	public void setIdadeGestacional(String idadeGestacional) {
 		this.idadeGestacional = idadeGestacional;
 	}
-
-	public String getPesoImc() {
+	public Double getPeso() {
+		return peso;
+	}
+	public void setPeso(Double peso) {
+		this.peso = peso;
+	}
+	public Double getAltura() {
+		return altura;
+	}
+	public void setAltura(Double altura) {
+		this.altura = altura;
+	}
+	public Double getPesoImc() {
 		return pesoImc;
 	}
 
-	public void setPesoImc(String pesoImc) {
+	public void setPesoImc(Double pesoImc) {
 		this.pesoImc = pesoImc;
 	}
 
-	public String getEdema() {
+	public boolean getEdema() {
 		return edema;
 	}
 
-	public void setEdema(String edema) {
+	public void setEdema(boolean edema) {
 		this.edema = edema;
 	}
 
@@ -139,20 +155,20 @@ public class ConsultaModel implements Serializable{
 		this.presArterial = presArterial;
 	}
 
-	public String getAlturaUterina() {
+	public Double getAlturaUterina() {
 		return alturaUterina;
 	}
 
-	public void setAlturaUterina(String alturaUterina) {
+	public void setAlturaUterina(Double alturaUterina) {
 		this.alturaUterina = alturaUterina;
 	}
 
-	public String getPresFetal() {
-		return presFetal;
+	public String getApresFetal() {
+		return apresFetal;
 	}
 
-	public void setPresFetal(String presFetal) {
-		this.presFetal = presFetal;
+	public void setApresFetal(String apresFetal) {
+		this.apresFetal = apresFetal;
 	}
 
 	public String getBcf() {
