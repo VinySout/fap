@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.fap.config.security.CurrentUser;
+import br.com.fap.config.security.UserPrincipal;
 import br.com.fap.exception.ResourceNotFoundException;
 import br.com.fap.model.EnderecoModel;
+import br.com.fap.model.PacienteModel;
 import br.com.fap.repository.EnderecoRepository;
-import br.com.fap.repository.PacienteRepository;
+import br.com.fap.repository.impl.PacienteRepositoryImpl;
 
 @RestController
 @RequestMapping("/api")
@@ -25,49 +28,53 @@ public class EnderecoController {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
 	@Autowired
-	private PacienteRepository pacienteRepository;
+	private PacienteRepositoryImpl pacienteRepositoryImpl;
 	
 	// Listar endereço de um paciente.	
 	@GetMapping("/pacientes/{idPaciente}/endereco")
-	public List<EnderecoModel> getEnderecoByPacienteId(@PathVariable Long idPaciente) {
-		pacienteRepository.findById(idPaciente)
-		.orElseThrow(() -> new ResourceNotFoundException("Paciente", "IdPaciente", idPaciente));
+	public List<EnderecoModel> getEnderecoByPacienteId(@CurrentUser UserPrincipal currentUser,
+														@PathVariable Long idPaciente) throws Exception {
+		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, idPaciente);
 		
 		return enderecoRepository.findByPacienteIdPaciente(idPaciente);
 	}
 	@GetMapping("/pacientes/{idPaciente}/endereco/{idEndereco}")
 	 public EnderecoModel getEndByPacIdAndEndId(@PathVariable Long idPaciente, 
-			 									@PathVariable Long idEndereco) {
-		 pacienteRepository.findById(idPaciente)
-		 .orElseThrow(() -> new ResourceNotFoundException("Paciente", "IdPaciente", idPaciente));
+			 									@CurrentUser UserPrincipal currentUser,
+			 									@PathVariable Long idEndereco) throws Exception {
+		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, idPaciente);
 		 
 		 return enderecoRepository.findById(idEndereco)
 				 .orElseThrow(() -> new ResourceNotFoundException("Endereco", "idEndereco", idEndereco));
 	 }
 	// Adicionar um endereço a um paciente.
 	@PostMapping("/pacientes/{pacienteId}/endereco")
-	public EnderecoModel addEndereco(@PathVariable Long pacienteId, @Valid @RequestBody EnderecoModel endereco) {
-		return pacienteRepository.findById(pacienteId)
-				.map(paciente -> {
-					endereco.setPaciente(paciente);
-					return enderecoRepository.save(endereco);
-		}).orElseThrow(() -> new ResourceNotFoundException("Paciente", "pacienteId", pacienteId));
+	public EnderecoModel addEndereco(@CurrentUser UserPrincipal currentUser, 
+									 @PathVariable Long pacienteId, @Valid @RequestBody EnderecoModel endereco) throws Exception {
+		
+		PacienteModel paciente = pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
+				
+		endereco.setPaciente(paciente);
+		
+		return enderecoRepository.save(endereco);
 	}
 	// Atualizar endereço de um paciente.
 	@PutMapping("/pacientes/{pacienteId}/endereco/{enderecoId}")
 	public EnderecoModel updateEndereco(@PathVariable Long pacienteId, 
+										@CurrentUser UserPrincipal currentUser, 
 										@PathVariable Long enderecoId,
-										@Valid @RequestBody EnderecoModel enderecoDetails) {
+										@Valid @RequestBody EnderecoModel enderecoDetails) throws Exception {
 		
-		pacienteRepository.findById(pacienteId)
-		.orElseThrow(() -> new ResourceNotFoundException("Paciente", "idPaciente", pacienteId));
+		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
 		
 		return enderecoRepository.findById(enderecoId)
 				.map(endereco -> {				
 					endereco.setCep(enderecoDetails.getCep());
 					endereco.setUf(enderecoDetails.getUf());
 					endereco.setCidade(enderecoDetails.getCidade());
+					endereco.setBairro(enderecoDetails.getBairro());
 					endereco.setRua(enderecoDetails.getRua());
 					endereco.setNumero(enderecoDetails.getNumero());
 					
@@ -77,15 +84,16 @@ public class EnderecoController {
 	}
 	// Deletar endereco de um paciente.
 	@DeleteMapping("/pacientes/{pacienteId}/endereco/{enderecoId}")
-	public String deleteEndereco(@PathVariable Long pacienteId,
-								@PathVariable Long enderecoId) {
-		pacienteRepository.findById(pacienteId)
-				.orElseThrow(() -> new ResourceNotFoundException("Paciente", "idPaciente", pacienteId));
+	public EnderecoModel deleteEndereco(@PathVariable Long pacienteId,
+										@CurrentUser UserPrincipal currentUser, 
+									    @PathVariable Long enderecoId) throws Exception {
+		
+		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
 
 		return enderecoRepository.findById(enderecoId)
 				.map(endereco ->{
 					enderecoRepository.delete(endereco);
-					return "Endereço com o id: " + enderecoId + " foi deletada pelo Usuário.";
+					return endereco;
 				}).orElseThrow(() -> new ResourceNotFoundException("Exames", "IdExames", enderecoId));
 	}	
 }

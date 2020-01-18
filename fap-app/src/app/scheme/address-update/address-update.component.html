@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="col-md-12">
+        <h3 class="md-3 text-center">Editar Endereço</h3>
+        <form #addressForm="ngForm">
+            <div [hidden]="cep.valid || cep.pristine" class="alert alert-danger">
+                Preencher campo CEP apenas com números!
+            </div>
+            <div [hidden]="uf.valid || uf.pristine" class="alert alert-danger">
+                Preencher campo UF corretamente! Ex.: RN
+            </div>
+            <div [hidden]="cidade.valid || cidade.pristine" class="alert alert-danger">
+                Preencher campo Cidade!
+            </div>
+            <div [hidden]="bairro.valid || bairro.pristine" class="alert alert-danger">
+                Preencher campo Bairro!
+            </div>
+            <div [hidden]="rua.valid || rua.pristine" class="alert alert-danger">
+                Preencher campo Rua!
+            </div>
+            <div [hidden]="numero.valid || numero.pristine" class="alert alert-danger">
+                Preencher campo Número!
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="cep">Cep:</label>
+                <input id="cep" type="text" name="cep" [(ngModel)]="address.cep" class="form-control" placeholder="CEP"
+                    pattern="\d{2}\.\d{3}\-\d{3}" OnKeyPress="formatar('99.999-999', this)" maxlength="10" required #cep="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="uf">UF:</label>
+                <select id="uf" name="uf" [(ngModel)]="address.uf" class="form-control" pattern="[A-Za-z]{2}" 
+                    maxlength="2" required #uf="ngModel">
+                    <option *ngFor="let uf of ufs" [value]="uf">{{ uf }}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="cidade">Cidade:</label>
+                <input id="cidade" type="text" name="cidade" [(ngModel)]="address.cidade" class="form-control" placeholder="Cidade"
+                    required minlength="3" #cidade="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="bairro">Bairro:</label>
+                <input id="bairro" type="text" name="bairro" [(ngModel)]="address.bairro" class="form-control" placeholder="Bairro"
+                    required minlength="3" #bairro="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="rua">Rua:</label>
+                <input id="rua" type="text" name="rua" [(ngModel)]="address.rua" class="form-control" placeholder="Rua"
+                    required minlength="3" #rua="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="numero">Número:</label>
+                <input id="numero" type="text" name="numero" [(ngModel)]="address.numero" class="form-control" placeholder="numero"
+                    required minlength="2" maxlength="4" #numero="ngModel">
+            </div>
+            <div class="form-group col-md-12">
+                <button class="btn btn-success btn-lg" (click)="updateAddress()" [disabled]="!addressForm.form.valid">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>

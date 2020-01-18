@@ -1,0 +1,49 @@
+<div class="container">
+        <div class="col-md-12">
+                <h3 class="md-3 text-center">Detalhes da Consulta</h3>
+                <div class="form-group col-sm-4">
+                    <label>Data da Consulta:</label>
+                    {{ appointment.dataConsulta | date : "dd/MM/y"}}
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>I.G.:</label>
+                    {{ appointment.idadeGestacional }}
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Peso:</label>
+                    {{ appointment.peso }}
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>P.A. mmHg:</label>
+                    {{ appointment.presArterial }}
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>A.U.:</label>
+                    {{ appointment.alturaUterina }}
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>BCF:</label>
+                    {{ appointment.bcf }}
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Edema:</label>
+                    {{ appointment.edema }}
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Apresentação:</label>
+                    {{ appointment.apresFetal }}
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Toque:</label>
+                    {{ appointment.toque }}
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Intercorrências e Orientações:</label>
+                    {{ appointment.obs }}
+                </div>
+                <div class="form-group col-md-12 btn-edt-dlt">
+                    <button class="btn btn-warning btn-sm" (click)="routeEditAptn()">Editar</button>
+                    <button class="btn btn-danger btn-sm" (click)="deleteAptn(appointment.idConsulta)">Deletar</button>
+                </div>
+            </div>
+</div>

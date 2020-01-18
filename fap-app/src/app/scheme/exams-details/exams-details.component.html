@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="col-md-12">
+        <h3 class="md-3 text-center">Detalhes dos Exames</h3>
+        <table class="table bordered striped centered highlight responsive-table">
+            <thead>
+                <tr>
+                    <th>Exames</th>
+                    <th scope="col">Resultados</th>
+                    <th scope="col">Datas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="col">Hemoglobina</th>
+                    <td>{{ exams.hemoglobina }}</td>
+                    <td>{{ exams.dtHemoglobina | date : "dd/MM/y"}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Glicose</th>
+                    <td>{{ exams.glicemia }}</td>
+                    <td>{{ exams.dtGlicemia | date : "dd/MM/y"}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Urina-EAS</th>
+                    <td>{{ exams.urinaEas }}</td>
+                    <td>{{ exams.dtUrinaEas | date : "dd/MM/y"}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">ABO-RH</th>
+                    <td>{{ exams.aboRh }}</td>
+                    <td>{{ exams.dtAboRh | date : "dd/MM/y"}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Cit. Oncótica</th>
+                    <td>{{ exams.citOncotica }}</td>
+                    <td>{{ exams.dtCitOncotica | date : "dd/MM/y"}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Hepatite B e C</th>
+                    <td>{{ exams.hepatite }}</td>
+                    <td>{{ exams.dtHepatite | date : "dd/MM/y"}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Sífilis</th>
+                    <td>{{ exams.sifilis }}</td>
+                    <td>{{ exams.dtSifilis | date : "dd/MM/y"}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">VDRL-HIV</th>
+                    <td>{{ exams.vdrlHiv }}</td>
+                    <td>{{ exams.dtVdrlHiv | date : "dd/MM/y" }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Toxoplasmose</th>
+                    <td>{{ exams.toxoplasmose }}</td>
+                    <td>{{ exams.dtToxopla | date : "dd/MM/y"}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Citomegalovirus</th>
+                    <td>{{ exams.citomegalovirus }}</td>
+                    <td>{{ exams.dtCitomega | date : "dd/MM/y"}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-group col-md-12 btn-edt-dlt">
+            <button class="btn btn-warning btn-sm" (click)="routeEditExams()">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteExams(exams.idExames)">Deletar</button>
+        </div>
+    </div>
+</div>

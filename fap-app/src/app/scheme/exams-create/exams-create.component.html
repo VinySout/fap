@@ -1,0 +1,201 @@
+<div class="container">
+    <div class="col-md-12">
+        <h3 class="md-3 text-center">Adicionar Exames</h3>
+        <form #examsForm="ngForm">
+            <div [hidden]="hemoglobina.valid || hemoglobina.pristine" class="alert alert-danger">
+                Preencher campo Hemoglobina!
+            </div>
+            <div [hidden]="dtHemoglobina.valid || dtHemoglobina.pristine" class="alert alert-danger">
+                Preencher campo Data Hemoglobina!
+            </div>
+            <div [hidden]="glicemia.valid || glicemia.pristine" class="alert alert-danger">
+                Preencher campo resultado Glicose!
+            </div> 
+            <div [hidden]="dtGlicemia.valid || dtGlicemia.pristine" class="alert alert-danger">
+                Preencher campo Data Glicose!
+            </div>
+            <div [hidden]="dtUrinaEas.valid || dtUrinaEas.pristine" class="alert alert-danger">
+                Preencher campo Data Urina-EAS!
+            </div>
+            <div [hidden]="urinaEas.valid || urinaEas.pristine" class="alert alert-danger">
+                    Preencher campo resultado Urina-EAS!
+                </div>
+            
+            <table class="table bordered striped centered highlight responsive-table">
+                <thead>
+                    <tr>
+                        <th>Exames</th>
+                        <th scope="col">Resultados</th>
+                        <th scope="col">Datas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="col">Hemoglobina</th>
+                        <td>
+                            <input id="hemoglobina" type="text" [(ngModel)]="exams.hemoglobina" name="hemoglobina" maxlength="4"
+                                class="form-control" placeholder="Hemoglobina" required #hemoglobina="ngModel">
+                        </td>
+                        <td>
+                            <input id="dtHemoglobina" type="text" [(ngModel)]="exams.dtHemoglobina" name="dtHemoglobina" 
+                            OnKeyPress="formatar('99/99/9999', this)" maxlength="10" 
+                            class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker required #dtHemoglobina="ngModel">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Glicose</th>
+                        <td>
+                            <input id="glicemia" type="text" [(ngModel)]="exams.glicemia" name="glicemia" maxlength="5"
+                                class="form-control" placeholder="Glicemia" required #glicemia="ngModel">
+                        </td>
+                        <td>
+                            <input id="dtGlicemia" type="text" [(ngModel)]="exams.dtGlicemia" name="dtGlicemia"
+                                OnKeyPress="formatar('99/99/9999', this)" maxlength="10" 
+                                class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker required #dtGlicemia="ngModel">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Urina-EAS</th>
+                        <td>
+                            <input id="urinaEas" type="text" [(ngModel)]="exams.urinaEas" name="urinaEas" class="form-control" placeholder="Urina-EAS" required #urinaEas="ngModel">
+                        </td>
+                        <td>
+                            <input id="dtUrinaEas" type="text" [(ngModel)]="exams.dtUrinaEas" name="dtUrinaEas" 
+                                OnKeyPress="formatar('99/99/9999', this)" maxlength="10" 
+                                class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker required #dtUrinaEas="ngModel">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">ABO-RH</th>
+                        <td>
+                            <input id="aboRh" type="text" [(ngModel)]="exams.aboRh" name="aboRh" class="form-control" placeholder="ABO-RH">
+                        </td>
+                        <td>
+                            <input id="dtAboRh" type="text" [(ngModel)]="exams.dtAboRh" name="dtAboRh"
+                                OnKeyPress="formatar('99/99/9999', this)" maxlength="10" 
+                                class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Cit. Oncótica</th>
+                        <td>
+                            <input id="citOncotica" type="text" [(ngModel)]="exams.citOncotica" name="citOncotica" class="form-control" placeholder="Cit. Oncótica">
+                        </td>
+                        <td>
+                            <input id="dtCitOncotica" type="text" [(ngModel)]="exams.dtCitOncotica" name="dtCitOncotica"
+                                OnKeyPress="formatar('99/99/9999', this)" maxlength="10" 
+                                class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Hepatite B e C</th>
+                        <td>
+                            <input id="hepatite" type="text" [(ngModel)]="exams.hepatite" name="hepatite" class="form-control" placeholder="Hepatite B e C">
+                        </td>
+                        <td>
+                            <input id="dtHepatite" type="text" [(ngModel)]="exams.dtHepatite" name="dtHepatite"
+                                OnKeyPress="formatar('99/99/9999', this)" maxlength="10" 
+                                class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Sífilis</th>
+                        <td>
+                            <form>
+                                <label class="radio-inline" for="sifilisTrue">
+                                    <input name="sifilis" [(ngModel)]="exams.sifilis" type="radio" id="sifilisTrue" value="Reagente">
+                                    Reagente</label>
+                                
+                                <label class="radio-inline" for="sifilisFalse">
+                                    <input name="sifilis" [(ngModel)]="exams.sifilis" type="radio" id="sifilisFalse" value="Não Reagente">
+                                    Não Reagente</label>
+                                
+                                <label class="radio-inline" for="sifilisNull">
+                                    <input name="sifilis" [(ngModel)]="exams.sifilis" type="radio" id="sifilisNull" value="">
+                                    Não Realizado</label>
+                            </form>
+                        </td>
+                        <td>
+                            <input id="dtSifilis" type="text" [(ngModel)]="exams.dtSifilis" name="dtSifilis"
+                                OnKeyPress="formatar('99/99/9999', this)" maxlength="10" 
+                                class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">VDRL-HIV</th>
+                        <td>
+                            <form>
+                                <label class="radio-inline" for="vdrlHivTrue">
+                                    <input name="vdrlHiv" [(ngModel)]="exams.vdrlHiv" type="radio" id="vdrlHivTrue" value="Reagente">
+                                    Reagente</label>
+                                
+                                <label class="radio-inline" for="vdrlHivFalse">
+                                    <input name="vdrlHiv" [(ngModel)]="exams.vdrlHiv" type="radio" id="vdrlHivFalse" value="Não Reagente">
+                                    Não Reagente</label>
+                                
+                                <label class="radio-inline" for="vdrlHivNull">
+                                    <input name="vdrlHiv" [(ngModel)]="exams.vdrlHiv" type="radio" id="vdrlHivNull" value="">
+                                    Não Realizado</label>
+                            </form>
+                        </td>
+                        <td>
+                            <input id="dtVdrlHiv" type="text" [(ngModel)]="exams.dtVdrlHiv" name="dtVdrlHiv" 
+                                OnKeyPress="formatar('99/99/9999', this)" maxlength="10" 
+                                class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Toxoplasmose</th>
+                        <td>
+                            <form>
+                                <label class="radio-inline" for="toxTrue">
+                                    <input name="toxoplasmose" [(ngModel)]="exams.toxoplasmose" type="radio" id="toxTrue" value="Reagente">
+                                    Reagente</label>
+                                
+                                <label class="radio-inline" for="toxFalse">
+                                    <input name="toxoplasmose" [(ngModel)]="exams.toxoplasmose" type="radio" id="toxFalse" value="Não Reagente">
+                                    Não Reagente</label>
+                                
+                                <label class="radio-inline" for="toxNull">
+                                    <input name="toxoplasmose" [(ngModel)]="exams.toxoplasmose" type="radio" id="toxNull" value="">
+                                    Não Realizado</label>
+                            </form>
+                        </td>
+                        <td>
+                            <input id="dtToxopla" type="text" [(ngModel)]="exams.dtToxopla" name="dtToxopla"
+                                OnKeyPress="formatar('99/99/9999', this)" maxlength="10" 
+                                class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Citomegalovirus</th>
+                        <td>
+                            <form>
+                                <label class="radio-inline" for="citomegaTrue">
+                                    <input name="citomegalovirus" [(ngModel)]="exams.citomegalovirus" type="radio" id="citomegaTrue" value="Reagente">
+                                    Reagente</label>
+                                
+                                <label class="radio-inline" for="citomegaFalse">
+                                    <input name="citomegalovirus" [(ngModel)]="exams.citomegalovirus" type="radio" id="citomegaFalse" value="Não Reagente">
+                                    Não Reagente</label>
+                                
+                                <label class="radio-inline" for="citomegaNull">
+                                    <input name="citomegalovirus" [(ngModel)]="exams.citomegalovirus" type="radio" id="citomegaNull" value="">
+                                    Não Realizado</label>
+                            </form>
+                        </td>
+                        <td>
+                            <input id="dtCitomega" type="text" [(ngModel)]="exams.dtCitomega" name="dtCitomega" 
+                                OnKeyPress="formatar('99/99/9999', this)" maxlength="10" 
+                                class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="form-group col-md-12">
+                <button class="btn btn-success btn-lg" (click)="addExams()" [disabled]="!examsForm.form.valid">Adicionar</button>
+            </div>
+        </form>
+    </div>
+</div>
+    

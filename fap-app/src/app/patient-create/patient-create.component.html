@@ -1,0 +1,137 @@
+<div class="container">
+
+    <div class="col-md-12" >
+        <h3 class="md-3 text-center">Adicionar Paciente</h3>
+        <form #patientForm="ngForm">
+            <div *ngIf="nomePaciente.invalid && (nomePaciente.dirty || nomePaciente.touched)" class="alert alert-danger">
+                <div *ngIf="nomePaciente.errors.required">
+                    Preencher campo Nome da Paciente!
+                </div>
+                <div *ngIf="nomePaciente.errors.minlength">
+                    O Nome da Paciente deve ter no mínimo 10 caracteres.
+                </div>
+            </div>
+            <div *ngIf="parent.invalid && (parent.dirty || parent.touched)" class="alert alert-danger">
+                <div *ngIf="parent.errors.required">
+                        Preencher campo Nome da Mãe ou Pai!
+                </div>
+                <div *ngIf="parent.errors.minlength">
+                    O Nome da Mãe ou Pai deve ter no mínimo 10 caracteres.
+                </div>
+            </div>
+            <div [hidden]="idPaciente.valid || idPaciente.pristine" class="alert alert-danger">
+                Preencher campo Número do cartão do SUS apenas com números!
+            </div>
+            <div [hidden]="cpf.valid || cpf.pristine" class="alert alert-danger">
+                Preencher campo CPF apenas com números!
+            </div>
+            <div [hidden]="identidade.valid || identidade.pristine" class="alert alert-danger">
+                Preencher campo Identidade apenas com números!
+            </div>
+            <div [hidden]="idade.valid || idade.pristine" class="alert alert-danger">
+                Preencher campo Idade apenas com números!
+            </div>
+            <div [hidden]="telefone.valid || telefone.pristine" class="alert alert-danger">
+                Preencher campo Telefone apenas com números! Ex.: 99 99999-9999
+            </div>
+            <div [hidden]="estadoCivil.valid || estadoCivil.pristine" class="alert alert-danger">
+                Preencher campo Estado Civil!
+            </div>
+            <div [hidden]="dum.valid || dum.pristine" class="alert alert-danger">
+                Preencher campo DUM!
+            </div>
+            <div [hidden]="dataNasc.valid || dataNasc.pristine" class="alert alert-danger">
+                Preencher campo Data de Nascimento!
+            </div>
+            <div [hidden]="dpp.valid || dpp.pristine" class="alert alert-danger">
+                Preencher campo DPP!
+            </div>
+            <div [hidden]="altura.valid || altura.pristine" class="alert alert-danger">
+                Preencher campo Altura apenas com números em cm! Ex.: 160.0 (É necessário no mínimo 4 digitos e o caracter separador é o "Ponto Final")
+            </div>
+            <div [hidden]="pesgest.valid || pesgest.pristine" class="alert alert-danger">
+                Preencher campo Peso apenas com números! Ex.: 60.0 (É necessário no mínimo 3 digitos e o caracter separador é o "Ponto Final")
+            </div>
+            <div class="form-group col-md-6">
+                <label for="nomePaciente">Nome da Paciente:</label>
+                <input id="nomePaciente" type="text" [(ngModel)]="patient.nomePaciente" name="nomePaciente"
+                    class="form-control" placeholder="Nome Completo" required minlength="10" #nomePaciente="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="parent">Nome da Mãe ou Pai:</label>
+                <input id="parent" type="text" [(ngModel)]="patient.nomeMae" name="nomeMae"
+                    class="form-control" placeholder="Nome da Mãe ou Pai da Paciente" required minlength="10" #parent="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="idPaciente">Número do cartão do SUS:</label>
+                <input id="idPaciente" type="text" [(ngModel)]="patient.idPaciente" name="idPaciente" maxlength="15" pattern="\d{15}"
+                    class="form-control" placeholder="Número do Cartão do SUS" required #idPaciente="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="cpf">CPF:</label>
+                <input id="cpf" type="text" [(ngModel)]="patient.cpf" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                    OnKeyPress="formatar('999.999.999-99', this)" maxlength="14"
+                    class="form-control" placeholder="CPF" required #cpf="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="identidade">Identidade:</label>
+                <input id="identidade" type="text" [(ngModel)]="patient.identidade" name="identidade" maxlength="9" pattern="\d{9}"
+                    class="form-control" placeholder="Identidade" required #identidade="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="idade">Idade:</label>
+                <input id="idade" type="text" [(ngModel)]="patient.idade" name="idade" maxlength="2" pattern="\d{2}"
+                    class="form-control" placeholder="Idade" required #idade="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="telefone">Telefone:</label>
+                <input id="telefone" type="text" [(ngModel)]="patient.telefone" name="telefone"  pattern="\d{2}\ \d{5}\-\d{4}"
+                    OnKeyPress="formatar('99 99999-9999', this)" maxlength="13"
+                    class="form-control" placeholder="Telefone" required #telefone="ngModel">
+            </div>      
+            <div class="form-group col-md-6">
+                <label for="estadoCivil">Estado Civil:</label>
+                <select id="estadoCivil" [(ngModel)]="patient.estadoCivil" name="estadoCivil" 
+                    class="form-control" required #estadoCivil="ngModel">
+                    <option *ngFor="let eCivil of eCivils" [value]="eCivil">{{eCivil}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="dataNasc">Data de Nascimento:</label>
+                <input id="dataNasc" type="text" [(ngModel)]="patient.dataNasc" name="dataNasc" 
+                    OnKeyPress="formatar('99/99/9999', this)" maxlength="10"
+                    class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker required #dataNasc="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="dum">DUM:</label>
+                <input id="dum" type="text" [(ngModel)]="patient.dum" name="dum" 
+                    OnKeyPress="formatar('99/99/9999', this)" maxlength="10"
+                    class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker required #dum="ngModel">
+             </div>
+            <div class="form-group col-md-6">
+                <label for="dpp">DPP:</label>
+                <input id="dpp" type="text" [(ngModel)]="patient.dpp" name="dpp" 
+                    OnKeyPress="formatar('99/99/9999', this)" maxlength="10"
+                    class="form-control" placeholder="31/12/2019" [bsConfig]="datePickerConfig" bsDatepicker required #dpp="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="altura">Altura(cm):</label>
+                <input id="altura" type="text" [(ngModel)]="patient.altura" name="altura" pattern="\d{3}\.\d+"
+                maxlength="5" class="form-control" placeholder="Altura da Gestante" required #altura="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="pesgest">Peso:</label>
+                <input id="pesgest" type="text" [(ngModel)]="patient.peso" name="pesgest" pattern="\d+\.\d+"
+                    maxlength="5" class="form-control" placeholder="Peso da gestante" required #pesgest="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="imc">IMC:</label>
+                <input id="imc" type="text" name="imc" [(ngModel)]="patient.imc" class="form-control" placeholder="Calculo IMC">
+            </div>
+            <div class="form-group col-md-12">
+               <button class="btn btn-success btn-lg" (click)="addPatient()" [disabled]="!patientForm.form.valid">Adicionar</button>
+            </div>
+        </form>
+    </div>
+</div>
+

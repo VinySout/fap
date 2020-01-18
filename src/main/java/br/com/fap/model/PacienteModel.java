@@ -12,8 +12,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 
 @Entity
 @Table(name = "pacientes")
@@ -22,17 +22,22 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         allowGetters = true)
 public class PacienteModel implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
+	@ManyToOne (fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "usuario_id", nullable = false)
+	@JsonIgnore
+	private UsuarioModel usuario;
+	
 	@Id
     private Long idPaciente;	
 	@NotNull
-    private Long cpf;
+    private String cpf;
 	@NotNull
     private Long identidade;
 	@NotNull
     private int idade;
 	@NotNull
-    private Long telefone;
+    private String telefone;
 	@NotBlank
     private String nomePaciente;
 	@NotBlank
@@ -40,14 +45,18 @@ public class PacienteModel implements Serializable {
 	@NotBlank
 	private String estadoCivil;
 	@NotNull
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
     private Date dataNasc;	
 	@NotNull
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dum; // Data da Última Mestruação	
 	@NotNull
-	@Temporal(TemporalType.DATE)
-	private Date dpp; // Data Provável do Parto		
+	@Temporal(TemporalType.TIMESTAMP)	
+	private Date dpp; // Data Provável do Parto
+	
+	private Double altura;
+	private Double peso;
+	private Double imc;
 	
 	@OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<ConsultaModel> consultas;
@@ -72,10 +81,10 @@ public class PacienteModel implements Serializable {
 	public void setIdPaciente(Long idPaciente) {
 		this.idPaciente = idPaciente;
 	}
-	public Long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
-	public void setCpf(Long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	public Long getIdentidade() {
@@ -90,10 +99,10 @@ public class PacienteModel implements Serializable {
 	public void setIdade(int idade) {
 		this.idade = idade;
 	}
-	public Long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(Long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 	public String getNomePaciente() {
@@ -131,7 +140,25 @@ public class PacienteModel implements Serializable {
 	}
 	public void setDpp(Date dpp) {
 		this.dpp = dpp;
-	}	
+	}
+	public Double getAltura() {
+		return altura;
+	}
+	public void setAltura(Double altura) {
+		this.altura = altura;
+	}
+	public Double getImc() {
+		return imc;
+	}
+	public void setImc(Double imc) {
+		this.imc = imc;
+	}
+	public Double getPeso() {
+		return peso;
+	}
+	public void setPeso(Double peso) {
+		this.peso = peso;
+	}
 	public Set<ConsultaModel> getConsultas() {
 		return consultas;
 	}
@@ -149,6 +176,12 @@ public class PacienteModel implements Serializable {
 	}
 	public void setEndereco(Set<EnderecoModel> endereco) {
 		this.endereco = endereco;
+	}	
+	public UsuarioModel getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(UsuarioModel usuario) {
+		this.usuario = usuario;
 	}
 	public Date getCreatedAt() {
 		return createdAt;
@@ -161,5 +194,5 @@ public class PacienteModel implements Serializable {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}	
+	}
 }

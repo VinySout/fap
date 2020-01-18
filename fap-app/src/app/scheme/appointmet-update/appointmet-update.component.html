@@ -1,0 +1,86 @@
+<div class="container">
+        <div class="col-md-12">
+            <h3 class="md-3 text-center">Atualizar Consulta</h3>
+            <form #appointForm="ngForm">
+                <div [hidden]="dc.valid || dc.pristine" class="alert alert-danger">
+                    Preencher campo Data da Consulta!
+                </div>
+                <div [hidden]="idadGest.valid || idadGest.pristine" class="alert alert-danger">
+                    Preencher campo IG apenas com números! Ex.: 30 (Equivale a quantidade em Semanas)
+                </div>
+                <div [hidden]="pesgest.valid || pesgest.pristine" class="alert alert-danger">
+                    Preencher campo Peso apenas com números! Ex.: 60.0 (É necessário no mínimo 3 digitos e o caracter separador é o "Ponto Final")
+                </div>
+                <div [hidden]="presArterial.valid || presArterial.pristine" class="alert alert-danger">
+                    Preencher campo PA apenas com números! Ex.: 120x80 (O "X" será automaticamente inserido)
+                </div>
+                <div [hidden]="alturaUterina.valid || alturaUterina.pristine" class="alert alert-danger">
+                    Preencher campo AU apenas com números! Ex.: 29.9 (É necessário no mínimo 3 digitos e o caracter separador é o "Ponto Final")
+                </div>
+                <div [hidden]="bcf.valid || bcf.pristine" class="alert alert-danger">
+                    Preencher campo BCF apenas com números! Ex.: 110 (Quantidade de batimentos por minuto)
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="dc">Data da Consulta:</label>
+                    <input id="dc" type="text" [(ngModel)]="appointment.dataConsulta" name="dc" 
+                    OnKeyPress="formatar('99/99/9999', this)" maxlength="10" class="form-control" placeholder="31/12/2019"
+                    [bsConfig]="datePickerConfig" bsDatepicker required #dc="ngModel">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="idadGest">I.G.:</label>
+                    <input id="idadGest" type="text" [(ngModel)]="appointment.idadeGestacional" name="idadGest" maxlength="2"
+                        pattern="\d{2}" class="form-control" placeholder="Idade Gestacional" required #idadGest="ngModel">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="pesgest">Peso:</label>
+                    <input id="pesgest" type="text" [(ngModel)]="appointment.peso" name="pesgest" pattern="\d+\.\d+"
+                        maxlength="5" class="form-control" placeholder="Peso da gestante" required #pesgest="ngModel">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="presArterial">P.A. mmHg:</label>
+                    <input id="presArterial" type="text" [(ngModel)]="appointment.presArterial" name="presArterial" pattern="\d+\x\d+"
+                        OnKeyPress="formatar('999x99', this)" maxlength="7" class="form-control" placeholder="Pressão Arterial" required #presArterial="ngModel">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="alturaUterina">A.U.:</label>
+                    <input id="alturaUterina" type="text" [(ngModel)]="appointment.alturaUterina" name="alturaUterina" pattern="\d+\.\d+"
+                        class="form-control" maxlength="4" placeholder="Altura Uterina" required #alturaUterina="ngModel">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="bcf">BCF:</label>
+                    <input id="bcf" type="text" [(ngModel)]="appointment.bcf" name="bcf" pattern="\d+" class="form-control" 
+                        maxlength="3" placeholder="Frequência Cardíaca Fetal" required #bcf="ngModel">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="apresFetal">Apresentação:</label>
+                    <select id="apresFetal" type="text" [(ngModel)]="appointment.apresFetal" name="apresFetal"  
+                        class="form-control" required #estadoCivil="ngModel">
+                        <option *ngFor="let aFetal of apresFetais" [value]="aFetal">{{aFetal}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="toque">Toque:</label>
+                    <input id="toque" type="text" name="toque" [(ngModel)]="appointment.toque" class="form-control" placeholder="Toque">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="obs">Intercorrências e Orientações:</label>
+                    <input id="obs" type="text" name="obs" [(ngModel)]="appointment.obs" class="form-control" placeholder="Observações">
+                </div>
+                <div class="form-group col-md-6">
+                    <label>EDEMA:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" name="edema" [(ngModel)]="appointment.edema" type="radio" id="edemaTrue" value="Sim">
+                        <label class="form-check-label" for="edemaTrue">Sim</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" name="edema" [(ngModel)]="appointment.edema" type="radio" id="edemaFalse" value="Não">
+                        <label class="form-check-label" for="edemaFalse">Não</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <button class="btn btn-success btn-lg" (click)="updateAptn()" [disabled]="!appointForm.form.valid">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    

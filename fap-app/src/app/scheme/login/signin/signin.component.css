@@ -1,0 +1,14 @@
+@media only screen and (max-width: 375px) {
+    .input-login {width: 20px;
+    }
+  }
+.btn-cadastro{
+    margin-left: 20px;
+}
+.input-login{
+    width: 340px;
+    margin: 15px auto;
+}
+.input-login button{
+    margin-top: 20px;
+}

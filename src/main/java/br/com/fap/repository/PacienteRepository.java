@@ -7,5 +7,5 @@ import br.com.fap.model.PacienteModel;
 
 @Repository
 public interface PacienteRepository extends JpaRepository<PacienteModel, Long>{
-
+	
 }

@@ -19,6 +19,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * @author souto
+ *
+ */
+/**
+ * @author souto
+ *
+ */
 @Entity
 @Table(name = "enderecos")
 @EntityListeners(AuditingEntityListener.class)
@@ -38,11 +46,13 @@ public class EnderecoModel implements Serializable{
 	private PacienteModel paciente;
 	
 	@NotNull
-	private Long cep;
+	private String cep;
 	@NotBlank
 	private String uf;
 	@NotBlank
 	private String cidade;
+	@NotBlank
+	private String bairro;
 	@NotBlank
 	private String rua;
 	@NotNull
@@ -60,10 +70,10 @@ public class EnderecoModel implements Serializable{
 	public void setPaciente(PacienteModel paciente) {
 		this.paciente = paciente;
 	}
-	public Long getCep() {
+	public String getCep() {
 		return cep;
 	}
-	public void setCep(Long cep) {
+	public void setCep(String cep) {
 		this.cep = cep;
 	}
 	public String getUf() {
@@ -77,6 +87,13 @@ public class EnderecoModel implements Serializable{
 	}
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
+	}
+	
+	public String getBairro() {
+		return bairro;
+	}
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
 	}
 	public String getRua() {
 		return rua;

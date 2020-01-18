@@ -43,32 +43,24 @@ public class ConsultaModel implements Serializable{
 	@JsonIgnore
 	private PacienteModel paciente;
 	
-	@Temporal(TemporalType.DATE)
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataConsulta;
-	@NotBlank
-	private String queixa;
 	@NotBlank
 	private String idadeGestacional;	
 	@NotNull
 	private Double peso;
-	@NotNull
-	private Double altura;
-	@NotNull
-	private Double pesoImc;
-	@NotNull
-	private boolean edema;
 	@NotBlank
 	private String presArterial;
 	@NotNull
 	private Double alturaUterina;
 	@NotBlank
-	private String apresFetal; //apresentação fetal
+	private String bcf; // Batimento cardíaco do feto	
 	@NotBlank
-	private String bcf; // Batimento cardíaco do feto
-	@NotBlank
-	private String toque;
-	@NotBlank
+	private String apresFetal; //apresentação fetal		
+	private String toque;	
 	private String obs;
+	private String edema;
 	
 	@Column(nullable = false, updatable = false)
     @Temporal(TemporalType.DATE)
@@ -79,7 +71,7 @@ public class ConsultaModel implements Serializable{
     @Temporal(TemporalType.DATE)
     @LastModifiedDate
     private Date updatedAt;
-	
+
 	public Long getIdConsulta() {
 		return idConsulta;
 	}
@@ -87,7 +79,7 @@ public class ConsultaModel implements Serializable{
 	public void setIdConsulta(Long idConsulta) {
 		this.idConsulta = idConsulta;
 	}
-	
+
 	public PacienteModel getPaciente() {
 		return paciente;
 	}
@@ -95,21 +87,12 @@ public class ConsultaModel implements Serializable{
 	public void setPaciente(PacienteModel paciente) {
 		this.paciente = paciente;
 	}
-
 	public Date getDataConsulta() {
 		return dataConsulta;
 	}
 
 	public void setDataConsulta(Date dataConsulta) {
 		this.dataConsulta = dataConsulta;
-	}
-
-	public String getQueixa() {
-		return queixa;
-	}
-
-	public void setQueixa(String queixa) {
-		this.queixa = queixa;
 	}
 
 	public String getIdadeGestacional() {
@@ -119,32 +102,13 @@ public class ConsultaModel implements Serializable{
 	public void setIdadeGestacional(String idadeGestacional) {
 		this.idadeGestacional = idadeGestacional;
 	}
+
 	public Double getPeso() {
 		return peso;
 	}
+
 	public void setPeso(Double peso) {
 		this.peso = peso;
-	}
-	public Double getAltura() {
-		return altura;
-	}
-	public void setAltura(Double altura) {
-		this.altura = altura;
-	}
-	public Double getPesoImc() {
-		return pesoImc;
-	}
-
-	public void setPesoImc(Double pesoImc) {
-		this.pesoImc = pesoImc;
-	}
-
-	public boolean getEdema() {
-		return edema;
-	}
-
-	public void setEdema(boolean edema) {
-		this.edema = edema;
 	}
 
 	public String getPresArterial() {
@@ -163,14 +127,6 @@ public class ConsultaModel implements Serializable{
 		this.alturaUterina = alturaUterina;
 	}
 
-	public String getApresFetal() {
-		return apresFetal;
-	}
-
-	public void setApresFetal(String apresFetal) {
-		this.apresFetal = apresFetal;
-	}
-
 	public String getBcf() {
 		return bcf;
 	}
@@ -179,6 +135,21 @@ public class ConsultaModel implements Serializable{
 		this.bcf = bcf;
 	}
 
+	public String getEdema() {
+		return edema;
+	}
+
+	public void setEdema(String edema) {
+		this.edema = edema;
+	}
+
+	public String getApresFetal() {
+		return apresFetal;
+	}
+
+	public void setApresFetal(String apresFetal) {
+		this.apresFetal = apresFetal;
+	}
 	public String getToque() {
 		return toque;
 	}
@@ -210,5 +181,7 @@ public class ConsultaModel implements Serializable{
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+    
 	
 }

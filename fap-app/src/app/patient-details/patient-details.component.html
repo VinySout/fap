@@ -1,0 +1,185 @@
+<div class="container">
+    <!--+++++++     DETALHES DA PACIENTE    ++++++++
+        ++++++++++++++++++++++++++++++++++++++++++++-->
+    <div class="col-md-12">
+        <h3 class="md-3 text-center">Detalhes da Paciente</h3>
+        <div class="form-group col-sm-4">
+            <label for="nomePaciente">Nome da Paciente:</label>
+            {{ patient.nomePaciente }}
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="parent">Nome da Mãe ou Pai:</label>
+            {{ patient.nomeMae }}
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="cartaoSus">Número do cartão do SUS:</label>
+            {{ patient.idPaciente }}
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="cpf">CPF:</label>
+            {{ patient.cpf }}
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="identidade">Identidade:</label>
+            {{ patient.identidade }}
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="idade">Idade:</label>
+            {{ patient.idade }}
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="tel">Telefone:</label>
+            {{ patient.telefone }}
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="eCivil">Estado Civil:</label>
+            {{ patient.estadoCivil }}
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="dNasc">Data de Nascimento:</label>
+            {{ patient.dataNasc | date : "dd/MM/y"}}
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="dum">Data da última Mestruação:</label>
+            {{ patient.dum | date : "dd/MM/y"}}
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="dpp">Data Provável do Parto:</label>
+            {{ patient.dpp | date : "dd/MM/y"}}
+        </div>
+        <div class="form-group col-sm-4">
+            <label>Altura:</label>
+            {{ patient.altura }}
+        </div>
+        <div class="form-group col-sm-4">
+            <label>Peso:</label>
+            {{ patient.peso }}
+        </div>
+        <div class="form-group col-sm-4">
+            <label>Imc:</label>
+            {{ patient.imc }}
+        </div>
+        <div class="form-group col-md-12 btn-edt-dlt btn-details">
+            <button class="btn btn-warning btn-sm" routerLink="/paciente-editar/{{patient.idPaciente}}">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="deletePatient(patient.idPaciente)">Deletar</button>
+        </div>
+    </div>
+    <!--++++     FIM DOS DETALHES DA PACIENTE   +++++
+        +++++++++++++++++++++++++++++++++++++++++++++
+        +++++++++++        ENDEREÇO        ++++++++++
+        +++++++++++++++++++++++++++++++++++++++++++++-->
+    <div class="col-md-12 div-endereco">
+        <h3 class="mb-3 text-center">Endereço</h3>
+        <div class="no-data text-center" *ngIf="patientAddress.length == 0">
+            <p>Ainda não existe Endereço Cadastrado.</p>
+            <button class="btn btn-outline-primary" routerLink="/{{patient.idPaciente}}/endereco-novo">Adicionar Endereço</button>
+        </div>
+        <div *ngIf="patientAddress.length !== 0">
+            <table class="table bordered striped centered highlight responsive-table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="resp-layout">CEP</th>
+                        <th scope="col" class="resp-layout">UF</th>
+                        <th scope="col">Cidade</th>
+                        <th scope="col" >Bairro</th>
+                        <th scope="col" class="resp-layout">Rua</th>
+                        <th scope="col" class="resp-layout">Número</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let address of patientAddress">
+                        <td class="resp-layout">{{address.cep}}</td>
+                        <td class="resp-layout">{{address.uf}}</td>
+                        <td>{{address.cidade}}</td>
+                        <td>{{address.bairro}}</td>
+                        <td class="resp-layout">{{address.rua}}</td>
+                        <td class="resp-layout">{{address.numero}}</td>
+                        <td class="btn-edt-dlt btn-details">
+                            <button class="btn btn-warning btn-sm" routerLink="/{{patient.idPaciente}}/endereco-editar/{{address.idEndereco}}">Editar</button>
+                            <button class="btn btn-danger btn-sm" (click)="deleteAddress(address.idEndereco)">Deletar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--+++++++       FIM DO ENDEREÇO        ++++++++
+        +++++++++++++++++++++++++++++++++++++++++++++
+        +++++++           CONSULTAS          ++++++++-->
+    <div class="col-md-12">
+        <h3 class="mb-3 text-center">Consultas</h3>
+        <button class="btn btn-primary" routerLink="/{{patient.idPaciente}}/consulta-nova">Adicionar Consulta</button>
+        <div class="no-data text-center" *ngIf="patientAptnt.length == 0">
+            <p>Ainda não existe Consulta Cadastrada.</p>
+        </div>
+        <div *ngIf="patientAptnt.length !== 0">
+            <table class="table bordered striped centered highlight responsive-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Data</th>
+                        <th scope="col">I.G.</th>
+                        <th scope="col">Peso</th>
+                        <th scope="col">P.A. mmHg</th>
+                        <th scope="col">A.U.</th>
+                        <th scope="col">BCF</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let appointment of patientAptnt">
+                        <td>{{appointment.dataConsulta | date : "dd/MM/y"}}</td>
+                        <td>{{appointment.idadeGestacional}}</td>
+                        <td>{{appointment.peso}}</td>
+                        <td>{{appointment.presArterial}}</td>
+                        <td>{{appointment.alturaUterina}}</td>
+                        <td>{{appointment.bcf}}</td>
+                        <td class="btn-details">
+                            <button class="btn btn-info btn-sm" routerLink="/{{patient.idPaciente}}/consulta-detalhes/{{appointment.idConsulta}}">Detalhes</button>
+                       </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--++++++++      FIM DAS CONSULTAS     +++++++++
+        +++++++++++++++++++++++++++++++++++++++++++++
+        ++++++++          EXAMES            +++++++++-->
+    <div class="col-md-12">
+        <h3 class="mb-3 text-center">Exames</h3>
+        <button class="btn btn-primary" routerLink="/{{patient.idPaciente}}/exames-novo">Adicionar Exames</button>
+        <div class="no-data text-center" *ngIf="patientExams.length == 0">
+            <p>Ainda não existe Exames Cadastrado.</p>
+        </div>
+        <div *ngIf="patientExams.length !== 0">
+                <table class="table bordered striped centered highlight responsive-table" *ngFor="let exams of patientExams">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Hemoglobina</th>
+                            <th scope="col">Urina-EAS</th>
+                            <th scope="col">Glicose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Resultado</th>
+                            <td>{{exams.hemoglobina}}</td>
+                            <td>{{exams.urinaEas}}</td>
+                            <td>{{exams.glicemia}}</td>
+                            <td rowspan="2" class="btn-details">
+                                <button class="btn btn-info btn-sm" routerLink="/{{patient.idPaciente}}/exames-detalhes/{{exams.idExames}}">Detalhes</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Data</th>
+                            <td>{{exams.dtHemoglobina | date : "dd/MM/y"}}</td>
+                            <td>{{exams.dtUrinaEas | date : "dd/MM/y"}}</td>
+                            <td>{{exams.dtGlicemia | date : "dd/MM/y"}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    <!--+++++++        FIM DOS EXAMES          ++++++
+        +++++++++++++++++++++++++++++++++++++++++++++-->
+</div>

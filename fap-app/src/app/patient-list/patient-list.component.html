@@ -1,0 +1,38 @@
+<div class="container">
+
+    <div class="no-data text-center" *ngIf="Patient.length == 0">
+        <p>Ainda não existe Paciente Cadastrado.</p>
+        <button class="btn btn-outline-primary" routerLink="/paciente-novo">Adicionar Paciente</button>
+    </div>
+
+    <div *ngIf="Patient.length !== 0">
+        <h3 class="mb-3 text-center">Lista de Pacientes</h3>
+        <div class="col-md-12">
+            <button class="btn btn-primary" routerLink="/paciente-novo">Adicionar Paciente</button>
+            <table class="table bordered striped centered highlight responsive-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nº SUS</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col"class="resp-layout">Telefone</th>
+                        <th scope="col"class="resp-layout">DUM</th>
+                        <th scope="col"class="resp-layout">DPP</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let patient of Patient">
+                        <td>{{patient.idPaciente}}</td>
+                        <td>{{patient.nomePaciente}}</td>
+                        <td class="resp-layout">{{patient.telefone}}</td>
+                        <td class="resp-layout">{{patient.dum | date : "dd/MM/y"}}</td>
+                        <td class="resp-layout">{{patient.dpp | date : "dd/MM/y"}}</td>
+                        <td>
+                            <button class="btn btn-info" routerLink="/paciente-detalhes/{{patient.idPaciente}}">Detalhes</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
