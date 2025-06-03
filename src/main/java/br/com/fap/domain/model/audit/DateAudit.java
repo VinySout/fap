@@ -3,8 +3,8 @@ package br.com.fap.domain.model.audit;
 import java.io.Serializable;
 import java.time.Instant;
 
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
