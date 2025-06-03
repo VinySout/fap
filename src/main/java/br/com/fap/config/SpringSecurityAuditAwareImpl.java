@@ -7,7 +7,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import br.com.fap.config.security.UserPrincipal;
+import br.com.fap.adapter.out.security.UserPrincipal;
 
 public class SpringSecurityAuditAwareImpl implements AuditorAware<Long> {
 

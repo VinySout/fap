@@ -16,9 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.com.fap.config.security.CustomUserDetailsService;
-import br.com.fap.config.security.JwtAuthenticationEntryPoint;
-import br.com.fap.config.security.JwtAuthenticationFilter;
+import br.com.fap.adapter.out.security.CustomUserDetailsService;
+import br.com.fap.adapter.out.security.JwtAuthenticationEntryPoint;
+import br.com.fap.adapter.out.security.JwtAuthenticationFilter;
 
 
 @Configuration
