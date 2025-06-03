@@ -15,9 +15,13 @@ import br.com.fap.adapter.in.web.dto.LoginRequest;
 import br.com.fap.adapter.in.web.dto.SignUpRequest;
 import br.com.fap.domain.port.in.ICadastroUsuarioUseCase;
 import br.com.fap.domain.port.in.ILoginUsuarioUseCase;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Autenticação", description = "Operações relacionadas a autenticação no serviço")
 public class AuthController {
 	
 	@Autowired
@@ -26,12 +30,25 @@ public class AuthController {
 	@Autowired
 	private ICadastroUsuarioUseCase cadastroUsuarioUseCase;
 
-
+    @Operation(summary = "Geração do Bearer Token")
+    @ApiResponses(value = {
+        @io.swagger.v3.oas.annotations.responses
+        .ApiResponse(responseCode = "200", description = "accessToken e tokenType com sucesso"),
+        @io.swagger.v3.oas.annotations.responses
+        .ApiResponse(responseCode = "401", description = "Credenciais invalidas sem autorização")
+    }) 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(loginUsuarioUseCase.autenticarUsuario(loginRequest));
     }
     
+    @Operation(summary = "Cadastro de usuário no sistema")
+    @ApiResponses(value = {
+        @io.swagger.v3.oas.annotations.responses
+        .ApiResponse(responseCode = "201", description = "User registered successfully"),
+        @io.swagger.v3.oas.annotations.responses
+        .ApiResponse(responseCode = "400", description = "Nome para Login: '<PARAM-USERNAME>' já cadastrado em nossa base! (Escolha outro).")
+    }) 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
     	if (cadastroUsuarioUseCase.validarUsuarioExistente(signUpRequest.getUsername())) {

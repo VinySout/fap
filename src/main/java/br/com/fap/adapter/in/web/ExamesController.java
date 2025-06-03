@@ -18,22 +18,37 @@ import br.com.fap.adapter.out.security.CurrentUser;
 import br.com.fap.adapter.out.security.UserPrincipal;
 import br.com.fap.domain.model.ExamesModel;
 import br.com.fap.domain.port.in.IExameUseCase;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api")
+@Tag(name = "Exames", description = "Operações relacionadas aos exames")
 public class ExamesController {
 	
 	@Autowired
 	private IExameUseCase exameUseCase;
 	
-	// Listar todos os resultados de exames de um paciente.
+    @Operation(summary = "Listar todos os exames")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
 	@GetMapping("/pacientes/{pacienteId}/exames")
 	 public List<ExamesModel> getExamesByPacienteId(@CurrentUser UserPrincipal currentUser, 
 			 										@PathVariable Long pacienteId) throws Exception {	 
 		return exameUseCase.listarExamesPaciente(currentUser, pacienteId);
 	 }	
 	
-	// Listar os exames de filtrado por id do paciente e id dos exames.
+    @Operation(summary = "Buscar exames por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Paciente encontrado"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+        @ApiResponse(responseCode = "404", description = "Paciente não encontrado")
+    })
 	@GetMapping("/pacientes/{idPaciente}/exames/{idExames}")
 	 public ExamesModel getExaByPacIdAndExaId(@CurrentUser UserPrincipal currentUser,
 	 										  @PathVariable Long idPaciente, 
@@ -42,7 +57,12 @@ public class ExamesController {
 		return exameUseCase.buscarExamePaciente(currentUser, idPaciente, idExames);
 	 }
 	
-	// Adicionar resultados de exames de um paciente.
+    @Operation(summary = "Adicionar novo exame")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Exame criado com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos")
+    })
 	@PostMapping("/pacientes/{pacienteId}/exames")
 	public ExamesModel novosExames(@CurrentUser UserPrincipal currentUser,
 								   @PathVariable Long pacienteId, @Valid 
@@ -51,7 +71,12 @@ public class ExamesController {
 		return exameUseCase.inserirExamePaciente(currentUser, pacienteId, exames);
 	}
 	
-	// Atualizar resultados de exames de um paciente.
+    @Operation(summary = "Atualizar exame por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Exame atualizado com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+        @ApiResponse(responseCode = "404", description = "Exame não encontrado")
+    })
 	@PutMapping("/pacientes/{pacienteId}/exames/{examesId}")
 	public ExamesModel updateExames(@CurrentUser UserPrincipal currentUser,
 									@PathVariable Long pacienteId, 
@@ -62,7 +87,12 @@ public class ExamesController {
 		return exameUseCase.editarExamePaciente(currentUser, pacienteId, examesId, examesDetails);
 	}
 	
-	// Deletar resultados de exames de um paciente.
+    @Operation(summary = "Excluir exame por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Exame excluído com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+        @ApiResponse(responseCode = "404", description = "Exame não encontrado")
+    })
 	@DeleteMapping("/pacientes/{pacienteId}/exames/{examesId}")
 	public ExamesModel deleteExames(@CurrentUser UserPrincipal currentUser, 
 									@PathVariable Long pacienteId,

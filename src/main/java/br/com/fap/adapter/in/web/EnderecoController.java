@@ -18,22 +18,38 @@ import br.com.fap.adapter.out.security.CurrentUser;
 import br.com.fap.adapter.out.security.UserPrincipal;
 import br.com.fap.domain.model.EnderecoModel;
 import br.com.fap.domain.port.in.IEnderecoUseCase;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api")
+@Tag(name = "Endereço", description = "Operações relacionadas ao endereço")
 public class EnderecoController {
 	
 	@Autowired
 	private IEnderecoUseCase enderecoUseCase;
 
 	
-	// Listar endereço de um paciente.	
+    @Operation(summary = "Listar todos os enderecos")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+        @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
 	@GetMapping("/pacientes/{idPaciente}/endereco")
 	public List<EnderecoModel> getEnderecoByPacienteId(@CurrentUser UserPrincipal currentUser,
 														@PathVariable Long idPaciente) throws Exception {
 		return enderecoUseCase.listarEnderecosPaciente(currentUser, idPaciente);
 	}
 	
+    @Operation(summary = "Buscar endereço por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Endereço encontrado"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+        @ApiResponse(responseCode = "404", description = "Endereço não encontrado")
+    })
 	@GetMapping("/pacientes/{idPaciente}/endereco/{idEndereco}")
 	 public EnderecoModel getEndByPacIdAndEndId(@PathVariable Long idPaciente, 
 			 									@CurrentUser UserPrincipal currentUser,
@@ -41,7 +57,12 @@ public class EnderecoController {
 		return enderecoUseCase.buscarEnderecoPaciente(currentUser, idPaciente, idEndereco);
 	 }
 	
-	// Adicionar um endereço a um paciente.
+    @Operation(summary = "Adicionar novo endereço")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Endereço criado com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos")
+    })
 	@PostMapping("/pacientes/{pacienteId}/endereco")
 	public EnderecoModel addEndereco(@CurrentUser UserPrincipal currentUser, 
 									 @PathVariable Long pacienteId, @Valid @RequestBody EnderecoModel endereco) throws Exception {
@@ -49,7 +70,12 @@ public class EnderecoController {
 		return enderecoUseCase.inserirEnderecoPaciente(currentUser, pacienteId, endereco);
 	}
 	
-	// Atualizar endereço de um paciente.
+    @Operation(summary = "Atualizar endereço por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Endereço atualizado com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+        @ApiResponse(responseCode = "404", description = "Endereço não encontrado")
+    })
 	@PutMapping("/pacientes/{pacienteId}/endereco/{enderecoId}")
 	public EnderecoModel updateEndereco(@PathVariable Long pacienteId, 
 										@CurrentUser UserPrincipal currentUser, 
@@ -59,7 +85,12 @@ public class EnderecoController {
 		return enderecoUseCase.editarEnderecoPaciente(pacienteId, currentUser, enderecoId, enderecoDetails);
 	}
 	
-	// Deletar endereco de um paciente.
+    @Operation(summary = "Excluir endereço por ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Endereço excluído com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Não autorizado"),
+        @ApiResponse(responseCode = "404", description = "Endereço não encontrado")
+    })
 	@DeleteMapping("/pacientes/{pacienteId}/endereco/{enderecoId}")
 	public EnderecoModel deleteEndereco(@PathVariable Long pacienteId,
 										@CurrentUser UserPrincipal currentUser, 
