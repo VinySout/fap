@@ -10,8 +10,8 @@ import br.com.fap.domain.exception.ResourceNotFoundException;
 import br.com.fap.domain.model.ExamesModel;
 import br.com.fap.domain.model.PacienteModel;
 import br.com.fap.domain.port.in.IExameUseCase;
+import br.com.fap.domain.port.in.IPacienteUseCase;
 import br.com.fap.domain.port.out.ExamesRepository;
-import br.com.fap.domain.port.out.impl.PacienteRepositoryImpl;
 
 @Service
 public class ExameService implements IExameUseCase {
@@ -20,18 +20,18 @@ public class ExameService implements IExameUseCase {
 	private ExamesRepository examesRepository;
 	
 	@Autowired
-	private PacienteRepositoryImpl pacienteRepositoryImpl;
+	private IPacienteUseCase pacienteUseCase;
 
 	@Override
 	public List<ExamesModel> listarExamesPaciente(UserPrincipal currentUser, Long pacienteId) throws Exception {
-		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
+		pacienteUseCase.buscarPaciente(currentUser, pacienteId);
 		 
 		 return examesRepository.findByPacienteIdPaciente(pacienteId);
 	}
 
 	@Override
 	public ExamesModel buscarExamePaciente(UserPrincipal currentUser, Long idPaciente, Long idExames) throws Exception {
-		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, idPaciente);
+		pacienteUseCase.buscarPaciente(currentUser, idPaciente);
 		 
 		 return examesRepository.findById(idExames)
 				 .orElseThrow(() -> new ResourceNotFoundException("Endereco", "idExames", idExames));
@@ -40,7 +40,7 @@ public class ExameService implements IExameUseCase {
 	@Override
 	public ExamesModel inserirExamePaciente(UserPrincipal currentUser, Long pacienteId, ExamesModel exames)
 			throws Exception {
-		PacienteModel paciente = pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
+		PacienteModel paciente = pacienteUseCase.buscarPaciente(currentUser, pacienteId);
 		
 		exames.setPaciente(paciente);
 		return examesRepository.save(exames);
@@ -49,7 +49,7 @@ public class ExameService implements IExameUseCase {
 	@Override
 	public ExamesModel editarExamePaciente(UserPrincipal currentUser, Long pacienteId, Long examesId,
 			ExamesModel examesDetails) throws Exception {
-		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
+		pacienteUseCase.buscarPaciente(currentUser, pacienteId);
 		
 		return examesRepository.findById(examesId)
 				.map(exames -> {
@@ -82,7 +82,7 @@ public class ExameService implements IExameUseCase {
 	@Override
 	public ExamesModel excluirExamePaciente(UserPrincipal currentUser, Long pacienteId, Long examesId)
 			throws Exception {
-		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
+		pacienteUseCase.buscarPaciente(currentUser, pacienteId);
 
 		return examesRepository.findById(examesId)
 				.map(exames ->{

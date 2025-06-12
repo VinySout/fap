@@ -13,7 +13,6 @@ import br.com.fap.domain.model.UsuarioModel;
 import br.com.fap.domain.port.in.IPacienteUseCase;
 import br.com.fap.domain.port.out.PacienteRepository;
 import br.com.fap.domain.port.out.UsuarioRepository;
-import br.com.fap.domain.port.out.impl.PacienteRepositoryImpl;
 
 @Service
 public class PacienteService implements IPacienteUseCase {
@@ -23,18 +22,18 @@ public class PacienteService implements IPacienteUseCase {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
-	@Autowired
-	private PacienteRepositoryImpl pacienteRepositoryImpl;
 
 	@Override
 	public List<PacienteModel> listarPacientes(UserPrincipal currentUser) throws Exception {
-		return pacienteRepositoryImpl.findAllByUserId(currentUser);
+		return pacienteRepository.findAllByUsuarioId(currentUser.getId());
 	}
 
 	@Override
 	public PacienteModel buscarPaciente(UserPrincipal currentUser, Long pacienteId) throws Exception {
-		return pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
+		PacienteModel pacienteModel = pacienteRepository.findByUsuarioIdAndIdPaciente(currentUser.getId(), pacienteId)
+		.orElseThrow(() -> new ResourceNotFoundException("Paciente", "Nº", pacienteId));
+		
+		return pacienteModel;
 	}
 
 	@Override

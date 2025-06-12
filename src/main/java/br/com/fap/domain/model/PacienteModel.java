@@ -15,6 +15,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "pacientes")
 @EntityListeners(AuditingEntityListener.class)
@@ -74,125 +79,4 @@ public class PacienteModel implements Serializable {
     @Temporal(TemporalType.DATE)
     @LastModifiedDate
     private Date updatedAt;
-        
-	public Long getIdPaciente() {
-		return idPaciente;
-	}
-	public void setIdPaciente(Long idPaciente) {
-		this.idPaciente = idPaciente;
-	}
-	public String getCpf() {
-		return cpf;
-	}
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-	public Long getIdentidade() {
-		return identidade;
-	}
-	public void setIdentidade(Long identidade) {
-		this.identidade = identidade;
-	}
-	public int getIdade() {
-		return idade;
-	}
-	public void setIdade(int idade) {
-		this.idade = idade;
-	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-	public String getNomePaciente() {
-		return nomePaciente;
-	}
-	public void setNomePaciente(String nomePaciente) {
-		this.nomePaciente = nomePaciente;
-	}
-	public String getNomeMae() {
-		return nomeMae;
-	}
-	public void setNomeMae(String nomeMae) {
-		this.nomeMae = nomeMae;
-	}
-	public String getEstadoCivil() {
-		return estadoCivil;
-	}
-	public void setEstadoCivil(String estadoCivil) {
-		this.estadoCivil = estadoCivil;
-	}
-	public Date getDataNasc() {
-		return dataNasc;
-	}
-	public void setDataNasc(Date dataNasc) {
-		this.dataNasc = dataNasc;
-	}
-	public Date getDum() {
-		return dum;
-	}
-	public void setDum(Date dum) {
-		this.dum = dum;
-	}
-	public Date getDpp() {
-		return dpp;
-	}
-	public void setDpp(Date dpp) {
-		this.dpp = dpp;
-	}
-	public Double getAltura() {
-		return altura;
-	}
-	public void setAltura(Double altura) {
-		this.altura = altura;
-	}
-	public Double getImc() {
-		return imc;
-	}
-	public void setImc(Double imc) {
-		this.imc = imc;
-	}
-	public Double getPeso() {
-		return peso;
-	}
-	public void setPeso(Double peso) {
-		this.peso = peso;
-	}
-	public Set<ConsultaModel> getConsultas() {
-		return consultas;
-	}
-	public void setConsultas(Set<ConsultaModel> consultas) {
-		this.consultas = consultas;
-	}		
-	public Set<ExamesModel> getExames() {
-		return exames;
-	}
-	public void setExames(Set<ExamesModel> exames) {
-		this.exames = exames;
-	}		
-	public Set<EnderecoModel> getEndereco() {
-		return endereco;
-	}
-	public void setEndereco(Set<EnderecoModel> endereco) {
-		this.endereco = endereco;
-	}	
-	public UsuarioModel getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(UsuarioModel usuario) {
-		this.usuario = usuario;
-	}
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
 }

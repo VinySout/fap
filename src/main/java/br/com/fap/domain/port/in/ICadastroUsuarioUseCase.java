@@ -2,11 +2,11 @@ package br.com.fap.domain.port.in;
 
 import java.net.URI;
 
-import br.com.fap.adapter.in.web.dto.SignUpRequest;
+import br.com.fap.adapter.in.web.dto.SignUpDto;
 
 public interface ICadastroUsuarioUseCase {
 	
-	URI cadastrarUsuario(SignUpRequest signUpRequest);
+	URI cadastrarUsuario(SignUpDto signUpRequest);
 
 	boolean validarUsuarioExistente(String username);
 	

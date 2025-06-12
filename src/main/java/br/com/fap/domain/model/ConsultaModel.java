@@ -25,6 +25,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "consultas")
 @EntityListeners(AuditingEntityListener.class)
@@ -71,117 +76,5 @@ public class ConsultaModel implements Serializable{
     @Temporal(TemporalType.DATE)
     @LastModifiedDate
     private Date updatedAt;
-
-	public Long getIdConsulta() {
-		return idConsulta;
-	}
-
-	public void setIdConsulta(Long idConsulta) {
-		this.idConsulta = idConsulta;
-	}
-
-	public PacienteModel getPaciente() {
-		return paciente;
-	}
-
-	public void setPaciente(PacienteModel paciente) {
-		this.paciente = paciente;
-	}
-	public Date getDataConsulta() {
-		return dataConsulta;
-	}
-
-	public void setDataConsulta(Date dataConsulta) {
-		this.dataConsulta = dataConsulta;
-	}
-
-	public String getIdadeGestacional() {
-		return idadeGestacional;
-	}
-
-	public void setIdadeGestacional(String idadeGestacional) {
-		this.idadeGestacional = idadeGestacional;
-	}
-
-	public Double getPeso() {
-		return peso;
-	}
-
-	public void setPeso(Double peso) {
-		this.peso = peso;
-	}
-
-	public String getPresArterial() {
-		return presArterial;
-	}
-
-	public void setPresArterial(String presArterial) {
-		this.presArterial = presArterial;
-	}
-
-	public Double getAlturaUterina() {
-		return alturaUterina;
-	}
-
-	public void setAlturaUterina(Double alturaUterina) {
-		this.alturaUterina = alturaUterina;
-	}
-
-	public String getBcf() {
-		return bcf;
-	}
-
-	public void setBcf(String bcf) {
-		this.bcf = bcf;
-	}
-
-	public String getEdema() {
-		return edema;
-	}
-
-	public void setEdema(String edema) {
-		this.edema = edema;
-	}
-
-	public String getApresFetal() {
-		return apresFetal;
-	}
-
-	public void setApresFetal(String apresFetal) {
-		this.apresFetal = apresFetal;
-	}
-	public String getToque() {
-		return toque;
-	}
-
-	public void setToque(String toque) {
-		this.toque = toque;
-	}
-
-	public String getObs() {
-		return obs;
-	}
-
-	public void setObs(String obs) {
-		this.obs = obs;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-	
-    
 	
 }

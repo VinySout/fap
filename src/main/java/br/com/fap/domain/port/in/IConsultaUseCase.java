@@ -7,10 +7,10 @@ import br.com.fap.domain.model.ConsultaModel;
 
 public interface IConsultaUseCase {
 	
-	List<ConsultaModel> listarConsultasPaciente(UserPrincipal currentUser, Long idPaciente) 
+	List<ConsultaModel> listarConsultasPaciente(UserPrincipal currentUser, Long pacienteId) 
 			throws Exception;
 
-	ConsultaModel buscarConsultaPaciente(UserPrincipal currentUser, Long idPaciente, Long idConsulta) 
+	ConsultaModel buscarConsultaPaciente(UserPrincipal currentUser, Long pacienteId, Long consultaId) 
 			throws Exception;
 	
 	ConsultaModel inserirConsultaPaciente(UserPrincipal currentUser, Long pacienteId, ConsultaModel consulta)

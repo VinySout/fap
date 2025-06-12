@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.fap.adapter.in.web.dto.SignUpRequest;
+import br.com.fap.adapter.in.web.dto.SignUpDto;
 import br.com.fap.domain.exception.AppException;
 import br.com.fap.domain.model.Role;
 import br.com.fap.domain.model.RoleName;
@@ -21,16 +21,16 @@ import br.com.fap.domain.port.out.UsuarioRepository;
 public class CadastroUsuarioService implements ICadastroUsuarioUseCase {
     
     @Autowired
-    UsuarioRepository userRepository;
+    private UsuarioRepository userRepository;
     
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
 	@Override
-	public URI cadastrarUsuario(SignUpRequest signUpRequest) {
+	public URI cadastrarUsuario(SignUpDto signUpRequest) {
     	
         // Creating user's account
         UsuarioModel user = new UsuarioModel(signUpRequest.getName(), signUpRequest.getUsername(),
@@ -50,10 +50,12 @@ public class CadastroUsuarioService implements ICadastroUsuarioUseCase {
                 .buildAndExpand(result.getUsername()).toUri();
 	}
 	
+	@Override
 	public boolean validarUsuarioExistente(String username) {
 		return userRepository.existsByUsername(username);
 	}
 	
+	@Override
 	public boolean validarEmailExistente(String email) {
 		return userRepository.existsByEmail(email);
 	}

@@ -7,8 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import br.com.fap.adapter.in.web.dto.JwtAuthenticationResponse;
-import br.com.fap.adapter.in.web.dto.LoginRequest;
+import br.com.fap.adapter.in.web.dto.JwtAuthenticationDto;
+import br.com.fap.adapter.in.web.dto.LoginDto;
 import br.com.fap.adapter.out.security.JwtTokenProvider;
 import br.com.fap.domain.port.in.ILoginUsuarioUseCase;
 
@@ -16,13 +16,13 @@ import br.com.fap.domain.port.in.ILoginUsuarioUseCase;
 public class LoginUsuarioService implements ILoginUsuarioUseCase {
 	
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    JwtTokenProvider tokenProvider;
+    private JwtTokenProvider tokenProvider;
 
 	@Override
-	public JwtAuthenticationResponse autenticarUsuario(LoginRequest loginRequest) {
+	public JwtAuthenticationDto autenticarUsuario(LoginDto loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsernameOrEmail(),
@@ -33,7 +33,7 @@ public class LoginUsuarioService implements ILoginUsuarioUseCase {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return new JwtAuthenticationResponse(jwt);
+        return new JwtAuthenticationDto(jwt);
 	}
 
 }

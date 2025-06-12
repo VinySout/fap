@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fap.adapter.in.web.dto.ApiResponse;
-import br.com.fap.adapter.in.web.dto.LoginRequest;
-import br.com.fap.adapter.in.web.dto.SignUpRequest;
+import br.com.fap.adapter.in.web.dto.ApiResponseDto;
+import br.com.fap.adapter.in.web.dto.LoginDto;
+import br.com.fap.adapter.in.web.dto.SignUpDto;
 import br.com.fap.domain.port.in.ICadastroUsuarioUseCase;
 import br.com.fap.domain.port.in.ILoginUsuarioUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/auth")
-@Tag(name = "Autenticação", description = "Operações relacionadas a autenticação no serviço")
+@Tag(name = "Autenticação/Inscrição", description = "Operações relacionadas a autenticação no serviço")
 public class AuthController {
 	
 	@Autowired
@@ -38,7 +38,7 @@ public class AuthController {
         .ApiResponse(responseCode = "401", description = "Credenciais invalidas sem autorização")
     }) 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginRequest) {
         return ResponseEntity.ok(loginUsuarioUseCase.autenticarUsuario(loginRequest));
     }
     
@@ -50,9 +50,9 @@ public class AuthController {
         .ApiResponse(responseCode = "400", description = "Nome para Login: '<PARAM-USERNAME>' já cadastrado em nossa base! (Escolha outro).")
     }) 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpDto signUpRequest) {
     	if (cadastroUsuarioUseCase.validarUsuarioExistente(signUpRequest.getUsername())) {
-            return new ResponseEntity(new ApiResponse(false, 
+            return new ResponseEntity(new ApiResponseDto(false, 
             		"Nome para Login: '" + signUpRequest.getUsername() 
             		+ "' já cadastrado em nossa base! (Escolha outro)."),
                     HttpStatus.BAD_REQUEST); 
@@ -60,13 +60,13 @@ public class AuthController {
     	
         if(cadastroUsuarioUseCase.validarEmailExistente(signUpRequest.getEmail())) {
         	String emailExistente = signUpRequest.getEmail();
-            return new ResponseEntity(new ApiResponse(false, 
+            return new ResponseEntity(new ApiResponseDto(false, 
             		"Email: '" + emailExistente + "' já cadastrado em base! (Escolha outro)."),
                     HttpStatus.BAD_REQUEST);
         }
         
         return ResponseEntity.created(cadastroUsuarioUseCase.cadastrarUsuario(signUpRequest))
-        		.body(new ApiResponse(true, "User registered successfully"));
+        		.body(new ApiResponseDto(true, "User registered successfully"));
     }
 
 }

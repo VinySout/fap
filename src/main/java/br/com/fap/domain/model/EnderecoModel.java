@@ -19,6 +19,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @author souto
  *
@@ -27,6 +30,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author souto
  *
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "enderecos")
 @EntityListeners(AuditingEntityListener.class)
@@ -57,56 +62,5 @@ public class EnderecoModel implements Serializable{
 	private String rua;
 	@NotNull
 	private int numero;
-	
-	public Long getIdEndereco() {
-		return idEndereco;
-	}
-	public void setIdEndereco(Long idEndereco) {
-		this.idEndereco = idEndereco;
-	}
-	public PacienteModel getPaciente() {
-		return paciente;
-	}
-	public void setPaciente(PacienteModel paciente) {
-		this.paciente = paciente;
-	}
-	public String getCep() {
-		return cep;
-	}
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-	public String getUf() {
-		return uf;
-	}
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
-	public String getCidade() {
-		return cidade;
-	}
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-	
-	public String getBairro() {
-		return bairro;
-	}
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-	public String getRua() {
-		return rua;
-	}
-	public void setRua(String rua) {
-		this.rua = rua;
-	}
-	public int getNumero() {
-		return numero;
-	}
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-	
-	
+
 }

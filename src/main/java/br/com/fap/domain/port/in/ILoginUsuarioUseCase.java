@@ -1,9 +1,9 @@
 package br.com.fap.domain.port.in;
 
-import br.com.fap.adapter.in.web.dto.JwtAuthenticationResponse;
-import br.com.fap.adapter.in.web.dto.LoginRequest;
+import br.com.fap.adapter.in.web.dto.JwtAuthenticationDto;
+import br.com.fap.adapter.in.web.dto.LoginDto;
 
 public interface ILoginUsuarioUseCase {
 
-	JwtAuthenticationResponse autenticarUsuario(LoginRequest loginRequest);
+	JwtAuthenticationDto autenticarUsuario(LoginDto loginRequest);
 }

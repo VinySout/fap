@@ -19,7 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 
 
-public class JwtAuthenticationFilter extends OncePerRequestFilter{
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtTokenProvider tokenProvider;
@@ -28,7 +28,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
     private CustomUserDetailsService customUserDetailsService;
     
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
-
     
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

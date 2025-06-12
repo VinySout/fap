@@ -12,10 +12,10 @@ import br.com.fap.domain.model.UsuarioModel;
 import br.com.fap.domain.port.out.UsuarioRepository;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	UsuarioRepository usuarioRepository;
+	private UsuarioRepository usuarioRepository;
 	
 	@Override
 	@Transactional

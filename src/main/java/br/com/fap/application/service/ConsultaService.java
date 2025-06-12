@@ -10,28 +10,28 @@ import br.com.fap.domain.exception.ResourceNotFoundException;
 import br.com.fap.domain.model.ConsultaModel;
 import br.com.fap.domain.model.PacienteModel;
 import br.com.fap.domain.port.in.IConsultaUseCase;
+import br.com.fap.domain.port.in.IPacienteUseCase;
 import br.com.fap.domain.port.out.ConsultaRepository;
-import br.com.fap.domain.port.out.impl.PacienteRepositoryImpl;
 
 @Service
 public class ConsultaService implements IConsultaUseCase {
 
 	@Autowired
 	private ConsultaRepository consultaRepository;
-
+	
 	@Autowired
-	private PacienteRepositoryImpl pacienteRepositoryImpl;
+	private IPacienteUseCase pacienteUseCase;
 
 	@Override
 	public List<ConsultaModel> listarConsultasPaciente(UserPrincipal currentUser, Long idPaciente) throws Exception {
-		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, idPaciente);
+		pacienteUseCase.buscarPaciente(currentUser, idPaciente);
 		return consultaRepository.findByPacienteIdPaciente(idPaciente);
 	}
 
 	@Override
 	public ConsultaModel buscarConsultaPaciente(UserPrincipal currentUser, Long idPaciente, Long idConsulta)
 			throws Exception {
-		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, idPaciente);
+		pacienteUseCase.buscarPaciente(currentUser, idPaciente);
 		return consultaRepository.findById(idConsulta)
 				.orElseThrow(() -> new ResourceNotFoundException("Consulta", "idConsulta", idConsulta));
 	}
@@ -39,8 +39,7 @@ public class ConsultaService implements IConsultaUseCase {
 	@Override
 	public ConsultaModel inserirConsultaPaciente(UserPrincipal currentUser, Long pacienteId, ConsultaModel consulta)
 			throws Exception {
-		PacienteModel paciente = pacienteRepositoryImpl
-				.findByIdUserAndPaciente(currentUser, pacienteId);
+		PacienteModel paciente = pacienteUseCase.buscarPaciente(currentUser, pacienteId);
 		
 		consulta.setPaciente(paciente);
 		
@@ -50,7 +49,7 @@ public class ConsultaService implements IConsultaUseCase {
 	@Override
 	public ConsultaModel editarConsultaPaciente(UserPrincipal currentUser, Long pacienteId, Long consultaId,
 			ConsultaModel consultaDetails) throws Exception {
-		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
+		pacienteUseCase.buscarPaciente(currentUser, pacienteId);
 		
 		return consultaRepository.findById(consultaId)
 				.map(consulta -> {
@@ -73,7 +72,7 @@ public class ConsultaService implements IConsultaUseCase {
 	@Override
 	public ConsultaModel excluirConsultaPaciente(UserPrincipal currentUser, Long pacienteId, Long consultaId)
 			throws Exception {
-		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
+		pacienteUseCase.buscarPaciente(currentUser, pacienteId);
 
 		return consultaRepository.findById(consultaId)
 				.map(consulta ->{

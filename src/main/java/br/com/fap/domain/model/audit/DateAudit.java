@@ -12,10 +12,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Data;
+
+@Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class DateAudit implements Serializable{
+public class DateAudit implements Serializable {
 	
 	/**
 	 * 
@@ -25,20 +28,5 @@ public class DateAudit implements Serializable{
 	private Instant createdAt;
 	@LastModifiedDate
 	private Instant updatedAt;
-	 
-	public Instant getCreatedAt() {
-		return createdAt;
-	}
 
-	public void setCreatedAt(Instant createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Instant getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Instant updatedAt) {
-		this.updatedAt = updatedAt;
-	}
 }

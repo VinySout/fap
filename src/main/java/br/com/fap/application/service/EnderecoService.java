@@ -10,8 +10,8 @@ import br.com.fap.domain.exception.ResourceNotFoundException;
 import br.com.fap.domain.model.EnderecoModel;
 import br.com.fap.domain.model.PacienteModel;
 import br.com.fap.domain.port.in.IEnderecoUseCase;
+import br.com.fap.domain.port.in.IPacienteUseCase;
 import br.com.fap.domain.port.out.EnderecoRepository;
-import br.com.fap.domain.port.out.impl.PacienteRepositoryImpl;
 
 @Service
 public class EnderecoService implements IEnderecoUseCase {
@@ -20,12 +20,12 @@ public class EnderecoService implements IEnderecoUseCase {
 	private EnderecoRepository enderecoRepository;
 	
 	@Autowired
-	private PacienteRepositoryImpl pacienteRepositoryImpl;
+	private IPacienteUseCase pacienteUseCase;
 
 	@Override
 	public List<EnderecoModel> listarEnderecosPaciente(UserPrincipal currentUser, Long idPaciente) 
 			throws Exception {
-		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, idPaciente);
+		pacienteUseCase.buscarPaciente(currentUser, idPaciente);
 		
 		return enderecoRepository.findByPacienteIdPaciente(idPaciente);
 	}
@@ -33,7 +33,7 @@ public class EnderecoService implements IEnderecoUseCase {
 	@Override
 	public EnderecoModel buscarEnderecoPaciente(UserPrincipal currentUser, Long idPaciente, Long idEndereco)
 			throws Exception {
-		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, idPaciente);
+		pacienteUseCase.buscarPaciente(currentUser, idPaciente);
 		 
 		 return enderecoRepository.findById(idEndereco)
 				 .orElseThrow(() -> new ResourceNotFoundException("Endereco", "idEndereco", idEndereco));
@@ -42,7 +42,7 @@ public class EnderecoService implements IEnderecoUseCase {
 	@Override
 	public EnderecoModel inserirEnderecoPaciente(UserPrincipal currentUser, Long pacienteId, EnderecoModel endereco)
 			throws Exception {
-		PacienteModel paciente = pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
+		PacienteModel paciente = pacienteUseCase.buscarPaciente(currentUser, pacienteId);
 		
 		endereco.setPaciente(paciente);
 		
@@ -52,7 +52,7 @@ public class EnderecoService implements IEnderecoUseCase {
 	@Override
 	public EnderecoModel editarEnderecoPaciente(Long pacienteId, UserPrincipal currentUser, Long enderecoId,
 			EnderecoModel enderecoDetails) throws Exception {
-		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
+		pacienteUseCase.buscarPaciente(currentUser, pacienteId);
 		
 		return enderecoRepository.findById(enderecoId)
 				.map(endereco -> {				
@@ -70,7 +70,7 @@ public class EnderecoService implements IEnderecoUseCase {
 	@Override
 	public EnderecoModel excluirEndereco(Long pacienteId, UserPrincipal currentUser, Long enderecoId) 
 			throws Exception {
-		pacienteRepositoryImpl.findByIdUserAndPaciente(currentUser, pacienteId);
+		pacienteUseCase.buscarPaciente(currentUser, pacienteId);
 
 		return enderecoRepository.findById(enderecoId)
 				.map(endereco ->{
